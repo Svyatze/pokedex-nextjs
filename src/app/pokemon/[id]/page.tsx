@@ -3,9 +3,10 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePokemonDetails } from '../../../hooks/usePokemon';
-import { getPokemonSpecies } from '../../../services/pokemonService';
-import { PokemonSpecies } from '../../../types/pokemon';
+import { usePokemonDetails } from '@/hooks/usePokemon';
+import { getPokemonSpecies } from '@/services/pokemonService';
+import { PokemonSpecies } from '@/types/pokemon';
+
 import Loading from '../../../components/Loading';
 import TypeBadge from '../../../components/TypeBadge';
 
@@ -78,12 +79,12 @@ export default function PokemonDetailPage({ params }: PokemonDetailPageProps) {
 
     return (
         <div className="container mx-auto p-8">
-            <Link href="/pokemon" className="inline-block mb-6 text-red-500 hover:underline">
+            <Link href="/pokemon" className="inline-block mb-6 text-pokemon-blue font-semibold hover:underline">
                 &larr; Back to Pokémon List
             </Link>
 
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-                <div className="p-6 bg-gradient-to-r from-red-500 to-red-600 text-white">
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-pokemon-blue">
+                <div className="p-6 bg-pokemon-yellow text-dark-text">
                     <div className="flex flex-col md:flex-row">
                         <div className="md:w-1/3 relative h-64 md:h-auto">
                             <Image
@@ -102,7 +103,7 @@ export default function PokemonDetailPage({ params }: PokemonDetailPageProps) {
 
                             <div className="mb-4">
                                 <h2 className="text-xl font-semibold mb-2">The {getGenus()}</h2>
-                                <p>{getEnglishFlavorText()}</p>
+                                <p className="text-dark-text">{getEnglishFlavorText()}</p>
                             </div>
 
                             <div className="flex gap-2 mb-4">
@@ -113,11 +114,11 @@ export default function PokemonDetailPage({ params }: PokemonDetailPageProps) {
 
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <p className="text-sm opacity-80">Height</p>
+                                    <p className="text-sm font-semibold">Height</p>
                                     <p className="font-bold">{(pokemon.height / 10).toFixed(1)} m</p>
                                 </div>
                                 <div>
-                                    <p className="text-sm opacity-80">Weight</p>
+                                    <p className="text-sm font-semibold">Weight</p>
                                     <p className="font-bold">{(pokemon.weight / 10).toFixed(1)} kg</p>
                                 </div>
                             </div>
@@ -126,23 +127,33 @@ export default function PokemonDetailPage({ params }: PokemonDetailPageProps) {
                 </div>
 
                 <div className="p-6">
-                    <h2 className="text-2xl font-bold mb-4">Base Stats</h2>
+                    <h2 style={{color: 'black', fontWeight: 'bold'}} className="text-2xl mb-4">Base Stats</h2>
                     <div className="space-y-4">
                         {pokemon.stats.map(stat => {
-                            const percentage = Math.min(100, (stat.base_stat / 255) * 100);
+                            const percentage = Math.min(100, (stat.base_stat / 180) * 100);
 
                             return (
                                 <div key={stat.stat.name}>
                                     <div className="flex justify-between mb-1">
-                    <span className="text-sm font-medium capitalize">
+                    <span style={{color: 'black'}} className="text-sm font-medium capitalize">
                       {stat.stat.name.replace('-', ' ')}
                     </span>
-                                        <span className="text-sm font-medium">{stat.base_stat}</span>
+                                        <span style={{color: 'black'}}
+                                              className="text-sm font-medium">{stat.base_stat}</span>
                                     </div>
-                                    <div className="w-full bg-gray-200 rounded-full h-2.5">
+                                    <div style={{
+                                        backgroundColor: '#e5e7eb',
+                                        height: '0.625rem',
+                                        borderRadius: '9999px',
+                                        border: '1px solid #3B5BA7'
+                                    }} className="w-full">
                                         <div
-                                            className="bg-red-500 h-2.5 rounded-full"
-                                            style={{width: `${percentage}%`}}
+                                            style={{
+                                                backgroundColor: '#FFCB05',
+                                                height: '0.5rem',
+                                                borderRadius: '9999px',
+                                                width: `${percentage}%`
+                                            }}
                                         ></div>
                                     </div>
                                 </div>
@@ -151,17 +162,17 @@ export default function PokemonDetailPage({ params }: PokemonDetailPageProps) {
                     </div>
                 </div>
 
-                <div className="p-6 border-t border-gray-200">
-                    <h2 className="text-2xl font-bold mb-4">Abilities</h2>
+                <div className="p-6 border-t border-pokemon-blue">
+                    <h2 className="text-2xl font-bold mb-4 text-dark-text">Abilities</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         {pokemon.abilities.map(ability => (
                             <div
                                 key={ability.ability.name}
-                                className="p-3 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors"
+                                className="p-3 rounded-lg bg-pokemon-yellow border border-pokemon-blue hover:bg-yellow-300 transition-colors"
                             >
-                                <h3 className="font-semibold capitalize mb-1">
+                                <h3 className="font-semibold capitalize mb-1 text-dark-text">
                                     {ability.ability.name.replace('-', ' ')}
-                                    {ability.is_hidden && <span className="ml-2 text-sm text-gray-500">(Hidden)</span>}
+                                    {ability.is_hidden && <span className="ml-2 text-sm font-semibold">(Hidden)</span>}
                                 </h3>
                             </div>
                         ))}

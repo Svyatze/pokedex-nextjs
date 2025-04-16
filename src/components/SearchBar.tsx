@@ -24,11 +24,32 @@ export default function SearchBar({ onSearch }: SearchBarProps) {
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
                     placeholder="Search Pokémon..."
-                    className="flex-grow px-4 py-2 border border-gray-300 rounded-l focus:outline-none focus:ring-2 focus:ring-red-500"
+                    style={{
+                        borderColor: '#3B5BA7',
+                        borderWidth: '2px',
+                        color: 'black',
+                        borderTopLeftRadius: '0.375rem',
+                        borderBottomLeftRadius: '0.375rem',
+                        padding: '0.75rem 1rem',
+                        fontSize: '1.125rem'
+                    }}
+                    className="flex-grow focus:outline-none focus:ring-2 focus:ring-yellow-400"
                 />
                 <button
                     type="submit"
-                    className="px-4 py-2 bg-red-500 text-white rounded-r hover:bg-red-600 transition-colors"
+                    style={{
+                        backgroundColor: '#FFCB05',
+                        color: 'black',
+                        borderColor: '#3B5BA7',
+                        borderWidth: '2px',
+                        borderLeftWidth: '0',
+                        borderTopRightRadius: '0.375rem',
+                        borderBottomRightRadius: '0.375rem',
+                        padding: '0.75rem 1.5rem',
+                        fontWeight: 'bold',
+                        fontSize: '1.125rem'
+                    }}
+                    className="hover:bg-yellow-400 transition-colors"
                 >
                     Search
                 </button>

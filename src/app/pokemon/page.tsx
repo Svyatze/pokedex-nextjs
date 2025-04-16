@@ -1,14 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { usePokemonList } from '../../hooks/usePokemon';
-import { getPokemon } from '../../services/pokemonService';
-import { Pokemon } from '../../types/pokemon';
+import { usePokemonList } from '@/hooks/usePokemon';
+import { getPokemon, searchPokemon } from '@/services/pokemonService';
+import { Pokemon } from '@/types/pokemon';
+
 import Loading from '../../components/Loading';
 import PokemonCard from '../../components/PokemonCard';
 import Pagination from '../../components/Pagination';
 import SearchBar from '../../components/SearchBar';
-import { searchPokemon } from '../../services/pokemonService';
 
 const ITEMS_PER_PAGE = 12;
 
@@ -42,7 +42,7 @@ export default function PokemonListPage() {
             }
         };
 
-        fetchPokemonDetails();
+        void fetchPokemonDetails();
     }, [pokemonList, isSearching]);
 
     const handlePageChange = (newPage: number) => {
@@ -89,18 +89,21 @@ export default function PokemonListPage() {
 
     return (
         <div className="container mx-auto p-8">
-            <h1 className="text-3xl font-bold mb-6">Pokémon List</h1>
+            <h1 style={{ color: 'black', borderBottom: '4px solid #FFCB05' }} className="text-4xl font-bold mb-6 pb-2 inline-block">
+                Pokémon List
+            </h1>
 
             <div className="mb-6">
                 <SearchBar onSearch={handleSearch} />
                 {isSearching && (
                     <div className="mt-2 flex items-center">
-            <span className="text-gray-600 mr-2">
+            <span style={{ color: 'black' }} className="font-semibold mr-2">
               Showing results for "{searchQuery}" ({searchResults.length} found)
             </span>
                         <button
                             onClick={clearSearch}
-                            className="text-sm text-red-500 hover:underline"
+                            style={{ color: '#3B5BA7' }}
+                            className="text-base font-bold hover:underline"
                         >
                             Clear search
                         </button>
@@ -120,7 +123,7 @@ export default function PokemonListPage() {
 
                     {displayedPokemon.length === 0 && (
                         <div className="text-center py-8">
-                            <p className="text-gray-500">No Pokémon found</p>
+                            <p style={{ color: 'black' }} className="text-xl font-semibold">No Pokémon found</p>
                         </div>
                     )}
 

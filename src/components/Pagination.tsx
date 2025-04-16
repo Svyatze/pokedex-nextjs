@@ -24,12 +24,39 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
         pageNumbers.push(i);
     }
 
+    const buttonStyles = {
+        base: {
+            border: '2px solid #3B5BA7',
+            borderRadius: '0.375rem',
+            padding: '0.625rem 1.25rem',
+            fontWeight: 'bold',
+            color: 'black'
+        },
+        active: {
+            backgroundColor: '#FFCB05',
+            color: 'black',
+            border: '2px solid #3B5BA7'
+        },
+        inactive: {
+            backgroundColor: 'white',
+            color: 'black',
+            border: '2px solid #3B5BA7'
+        },
+        disabled: {
+            opacity: 0.5
+        }
+    };
+
     return (
-        <div className="flex justify-center items-center space-x-2 my-6">
+        <div className="flex justify-center items-center space-x-3 my-8">
             <button
                 onClick={() => onPageChange(Math.max(1, currentPage - 1))}
                 disabled={currentPage === 1}
-                className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+                style={{
+                    ...buttonStyles.base,
+                    ...(currentPage === 1 ? buttonStyles.disabled : {}),
+                    backgroundColor: '#e5e7eb'
+                }}
             >
                 Previous
             </button>
@@ -38,11 +65,14 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
                 <>
                     <button
                         onClick={() => onPageChange(1)}
-                        className="px-4 py-2 rounded"
+                        style={{
+                            ...buttonStyles.base,
+                            ...buttonStyles.inactive
+                        }}
                     >
                         1
                     </button>
-                    {startPage > 2 && <span className="px-2">...</span>}
+                    {startPage > 2 && <span style={{ color: 'black', fontWeight: 'bold' }}>...</span>}
                 </>
             )}
 
@@ -50,9 +80,10 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
                 <button
                     key={number}
                     onClick={() => onPageChange(number)}
-                    className={`px-4 py-2 rounded ${
-                        currentPage === number ? 'bg-red-500 text-white' : 'bg-gray-200'
-                    }`}
+                    style={{
+                        ...buttonStyles.base,
+                        ...(currentPage === number ? buttonStyles.active : buttonStyles.inactive)
+                    }}
                 >
                     {number}
                 </button>
@@ -60,10 +91,13 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
 
             {endPage < totalPages && (
                 <>
-                    {endPage < totalPages - 1 && <span className="px-2">...</span>}
+                    {endPage < totalPages - 1 && <span style={{ color: 'black', fontWeight: 'bold' }}>...</span>}
                     <button
                         onClick={() => onPageChange(totalPages)}
-                        className="px-4 py-2 rounded bg-gray-200"
+                        style={{
+                            ...buttonStyles.base,
+                            ...buttonStyles.inactive
+                        }}
                     >
                         {totalPages}
                     </button>
@@ -73,7 +107,11 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
             <button
                 onClick={() => onPageChange(Math.min(totalPages, currentPage + 1))}
                 disabled={currentPage === totalPages}
-                className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+                style={{
+                    ...buttonStyles.base,
+                    ...(currentPage === totalPages ? buttonStyles.disabled : {}),
+                    backgroundColor: '#e5e7eb'
+                }}
             >
                 Next
             </button>
